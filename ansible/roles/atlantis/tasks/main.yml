@@ -1,0 +1,42 @@
+
+- name: Install Docker
+  include: docker.yml
+
+- name: Setup atlantis directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "100"
+    group: "1000"
+  with_items:
+  - "/etc/atlantis"
+  - "/var/lib/atlantis"
+  - "/var/lib/atlantis/plugin-cache"
+  - "/var/lib/atlantis/.atlantis"
+
+- name: Setup atlantis-flags environment variable
+  template:
+    src: "atlantis-flags.env.j2"
+    dest: "/var/lib/atlantis-flags.env"
+
+- name: Setup atlantis server-side repository configuration
+  template:
+    src: "repo.yaml.j2"
+    dest: "/etc/atlantis/repo.yaml"
+
+- name: Setup atlantis server configuration
+  template:
+    src: "atlantis-config.yaml.j2"
+    dest: "/etc/atlantis/atlantis-config.yaml"
+
+- name: Setup atlantis systemd service file
+  template:
+    src: "atlantis.service.j2"
+    dest: "/etc/systemd/system/atlantis.service"
+
+- name: Starting atlantis service
+  systemd:
+    name: atlantis
+    state: restarted
+    daemon-reload: yes
+    enabled: yes

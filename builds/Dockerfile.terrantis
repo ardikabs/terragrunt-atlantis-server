@@ -1,0 +1,5 @@
+FROM runatlantis/atlantis:v0.12.0
+
+# download terragrunt binary of the version you need
+RUN curl -o /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.23.20/terragrunt_linux_amd64 && \
+    chmod +x /usr/local/bin/terragrunt

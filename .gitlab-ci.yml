@@ -1,0 +1,51 @@
+stages:
+- build
+- deploy
+
+build-terrantis:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    IMAGE_NAME: ardikabs/terrantis
+    IMAGE_VERSION: 0.1.0
+  script:
+  - mkdir -p /kaniko/.docker
+  - echo "$DOCKERCONFIG" | base64 -d > /kaniko/.docker/config.json
+  - executor --context=$PWD --dockerfile=builds/Dockerfile.terrantis --destination=${IMAGE_NAME}:${IMAGE_VERSION}
+  when: manual
+
+build-ansible:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  variables:
+    IMAGE_NAME: ardikabs/ansible-stretch
+    IMAGE_VERSION: 2.9.9
+  script:
+  - mkdir -p /kaniko/.docker
+  - echo "$DOCKERCONFIG" | base64 -d > /kaniko/.docker/config.json
+  - executor --context=$PWD --dockerfile=builds/Dockerfile.ansible-stretch --destination=${IMAGE_NAME}:${IMAGE_VERSION}
+  when: manual
+
+deploy-atlantis:
+  stage: deploy
+  image: ardikabs/ansible-stretch:2.9.9
+  before_script:
+  - mkdir -p ~/.ssh
+  - echo -n "$SSH_CONFIG" | base64 -d > ~/.ssh/config
+  - echo -n "$VAULT_KEY" | base64 -d > /tmp/.pass.txt
+  - echo -n "$DEPLOY_KEY" | base64 -d > /tmp/deploy
+  - chmod 400 ~/.ssh/config
+  - chmod 400 /tmp/.pass.txt
+  - chmod 400 /tmp/deploy
+  script:
+  - cd ansible
+  - chmod 755 plays && cd plays;
+  - ansible-playbook -i ../inventory/atlantis.ini -e "HOSTS='${HOSTS}' deploy-atlantis.yml
+  only:
+    variables:
+    - $HOSTS
+  when: manual

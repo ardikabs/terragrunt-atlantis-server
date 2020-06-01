@@ -1,0 +1,14 @@
+FROM python:3.7-slim-stretch
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update -y \
+    && apt install -y --no-install-recommends \
+        sudo \
+        git \
+        build-essential \
+        wget \
+        openssh-client \
+    && pip install ansible cryptography
+RUN rm -rf /var/lib/apt/lists/* \
+    && rm -Rf /usr/share/doc \
+    && rm -Rf /usr/share/man \
+    && apt-get clean

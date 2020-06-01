@@ -1,0 +1,19 @@
+
+atlantis-url: "{{ atlantis_url }}"
+port: {{ atlantis_port | default(8080) }}
+log-level: info
+tf-default-version: "v{{ atlantis_terraform_version }}"
+data-dir: "/var/lib/atlantis/.atlantis"
+repo-whitelist: '{{ atlantis_repo_whitelist | default("github.com/*") }}'
+repo-config: /etc/atlantis/repo.yaml
+{% if github.enabled %}
+gh-token: "{{ github.token }}"
+gh-user: "{{ github.user }}"
+gh-webhook-secret: "{{ github.webhook_secret }}"
+gh-hostname: "{{ github.hostname | default('github.com') }}"
+{% elif gitlab.enabled %}
+gitlab-token: "{{ gitlab.token }}"
+gitlab-user: "{{ gitlab.user }}"
+gitlab-webhook-secret: "{{ gitlab.webhook_secret }}"
+gitlab-hostname: "{{ gitlab.hostname | default('gitlab.com') }}"
+{% endif %}

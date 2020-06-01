@@ -1,0 +1,21 @@
+
+atlantis_image: ardikabs/terrantis
+atlantis_version: 0.1.0
+atlantis_terraform_version: 0.12.25
+atlantis_url: "https://atlantis.example.com"
+atlantis_port: 8080
+atlantis_repo_whitelist: "github.com/ardikabs/*"
+
+github:
+  enabled: true
+  token: "github-personal-token"
+  user: "ardikabs"
+  hostname: "github.com"
+  webhook_secret: "github-webhook-super-secret"
+
+gitlab:
+  enabled: false
+  token: "gitlab-personal-token"
+  user: "ardikabs"
+  hostname: "gitlab.com"
+  webhook_secret: "gitlab-webhook-super-secret"

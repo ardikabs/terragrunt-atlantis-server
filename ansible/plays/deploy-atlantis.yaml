@@ -1,0 +1,6 @@
+- name: Spawning Atlantis Server
+  hosts: "{{ HOSTS }}"
+  become: yes
+  gather_facts: true
+  roles:
+  - atlantis
