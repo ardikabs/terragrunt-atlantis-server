@@ -30,8 +30,8 @@
     dest: "/etc/atlantis/atlantis-config.yaml"
 
 - name: Setup atlantis systemd service file
-  template:
-    src: "atlantis.service.j2"
+  copy:
+    src: "atlantis.service"
     dest: "/etc/systemd/system/atlantis.service"
 
 - name: Starting atlantis service

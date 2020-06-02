@@ -2,10 +2,10 @@
 A simple project to build container images for Atlantis server bundled with Terragrunt, include with ansible playbook to deploy it.
 
 ## Prerequisites
-* Terragrunt v0.23.20
-* Atlantis v0.12.0
-* Docker v19.03.6
-* Ansible v2.9.9
+* Terragrunt v0.23.20 (Server)
+* Atlantis v0.12.0 (Server)
+* Docker v19.03.6 (Server)
+* Ansible v2.9.9 (Client)
 
 ## How To
 1. Build the Atlantis with Terragrunt image

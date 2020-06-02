@@ -6,7 +6,7 @@ After=docker.service
 [Service]
 EnvironmentFile=-/var/lib/atlantis-flags.env
 ExecStartPre=-/usr/bin/docker rm -f atlantis-server
-ExecStart=/usr/bin/docker run --name atlantis-server $ATLANTIS_ENV_ARGS $ATLANTIS_DOCKER_ARGS {{ atlantis_image }}:{{ atlantis_version }}
+ExecStart=/usr/bin/docker run --name atlantis-server $ATLANTIS_ENV_ARGS $ATLANTIS_DOCKER_ARGS
 ExecStop=-/usr/bin/docker stop atlantis-server
 Restart=on-failure
 StartLimitBurst=3
