@@ -1,5 +1,6 @@
 FROM runatlantis/atlantis:v0.12.0
 
+ENV AWS_SDK_LOAD_CONFIG 1
 ENV TERRAGRUNT_TFPATH /usr/local/bin/terraform
 
 # download terragrunt binary of the version you need

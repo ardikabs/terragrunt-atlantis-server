@@ -1,18 +1,15 @@
 repos:
 - id: /.*/
   apply_requirements:
-    - approved
-    - mergeable
-  workflow: terragrunt
-  allowed_overrides:
+  - approved
+  - mergeable
   allow_custom_workflows: false
+  workflow: terragrunt
+
 workflows:
   terragrunt:
     plan:
       steps:
-      - env:
-          name: TERRAGRUNT_TFPATH
-          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
       - run: |
           cat > terraform.tf <<EOF
           provider "aws" {
@@ -23,10 +20,7 @@ workflows:
             backend "s3" {}
           }
           EOF
-      - run: terragrunt plan-all -no-color -out=$PLANFILE
+      - run: terragrunt plan -no-color -out=$PLANFILE
     apply:
       steps:
-      - env:
-          name: TERRAGRUNT_TFPATH
-          command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
-      - run: terragrunt apply-all -no-color $PLANFILE
+      - run: terragrunt apply -no-color $PLANFILE
