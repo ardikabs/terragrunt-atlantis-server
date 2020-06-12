@@ -15,14 +15,18 @@ workflows:
           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
       - run: |
           cat > terraform.tf <<EOF
+          provider "aws" {
+            version = "~> 2.0"
+            region  = "ap-southeast-1"
+          }
           terraform {
             backend "s3" {}
           }
           EOF
-      - run: terragrunt plan -no-color -out=$PLANFILE
+      - run: terragrunt plan-all -no-color -out=$PLANFILE
     apply:
       steps:
       - env:
           name: TERRAGRUNT_TFPATH
           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
-      - run: terragrunt apply -no-color $PLANFILE
+      - run: terragrunt apply-all -no-color $PLANFILE
