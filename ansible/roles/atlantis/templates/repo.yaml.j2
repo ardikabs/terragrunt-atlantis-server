@@ -11,11 +11,7 @@ workflows:
     plan:
       steps:
       - run: |
-          cat > terraform.tf <<EOF
-          provider "aws" {
-            version = "~> 2.0"
-            region  = "ap-southeast-1"
-          }
+          cat > backend.tf <<EOF
           terraform {
             backend "s3" {}
           }
