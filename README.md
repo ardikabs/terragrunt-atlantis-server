@@ -16,6 +16,7 @@ A simple project to build container images for Atlantis server bundled with Terr
 1. Deploy the Atlantis with Terragrunt service
     ```bash
     $ cd terragrunt-atlantis-server
+    $ cd ansible
     $ chmod 755 plays; cd plays
     $ ansible-playbook -i ../inventory/atlantis.ini -e "HOSTS=<your-machine-address>" deploy-atlantis.yaml
     ```
