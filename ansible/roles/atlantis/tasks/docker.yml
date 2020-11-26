@@ -33,6 +33,6 @@
 
 - name: Installing Docker {{ version }}
   apt:
-    name: "docker-ce={{ version }}"
+    name: "docker-ce"
     state: present
     update_cache: yes
